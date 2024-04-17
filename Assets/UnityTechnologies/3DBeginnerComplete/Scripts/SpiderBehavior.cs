@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class SpiderBehavior : MonoBehaviour
 {
     public Transform player;
     public float spiderspeed = 3f;
+    public float view = 33f;
 
     // Update is called once per frame
     void Update()
@@ -12,12 +14,14 @@ public class SpiderBehavior : MonoBehaviour
         Vector3 objectForward = transform.forward;
 
         float dotProduct = Vector3.Dot(directionToPlayer.normalized, objectForward);
+        float angle = Mathf.Acos(dotProduct) * Mathf.Rad2Deg;
 
-        if(dotProduct > 0){
+        if(angle < view){
 
             Vector3 targetPosition = player.position;
             float step = spiderspeed * Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, targetPosition, step);
+
         }
     }
 }
